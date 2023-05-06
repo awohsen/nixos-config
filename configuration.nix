@@ -69,8 +69,8 @@
       btop
       neofetch
       ncdu
+      zoxide
       neovim
-      git
       wget
       curl
       rar
@@ -81,27 +81,44 @@
       openjdk
       xray
       tun2socks
-      docker-compose  
+      docker-compose
+      waybar
     ];
   };
 
-  programs.sway.enable = true;
-  programs.git = {
-    enable = true;
-    config = {
-      user.name = "awohsen";
-      user.email = "awohsen@gmail.com";
-      init.defaultBranch = "main";
+  programs = {
+    sway.enable = true;
+    waybar.enable=true;
+    thefuck.enable = true;
+
+    git = {
+      enable = true;
+      config = {
+        user.name = "awohsen";
+        user.email = "awohsen@gmail.com";
+        init.defaultBranch = "main";
+      };
+    };
+
+    zsh = {
+      enable = true;
+      ohMyZsh = {
+        enable = true;
+        theme = "gozilla";
+        plugins = [ "git" "sudo" "docker" "zoxide" "dirhistory"];
+      };
+      enableCompletion = true;
+      autosuggestions.enable = true;
+      syntaxHighlighting.enable = true;
     };
   };
 
   users.users = {
     # Replace with your username
     awohsen = {
-      # You can set an initial password for your user.
-      # Be sure to change it (using passwd) after rebooting!
-      initialPassword = "p@ssw0rd";
+      shell = pkgs.zsh;
       isNormalUser = true;
+      initialPassword = "p@ssw0rd";
       openssh.authorizedKeys.keys = [
         # Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
@@ -111,12 +128,31 @@
         firefox
         tdesktop
         keepassxc
-	      vscode
-	      kitty
-	      alacritty
+        vscode
+        kitty
+        alacritty
      ];
     };
   };
+
+  fonts.fonts = with pkgs; [
+    corefonts
+    ubuntu_font_family
+    powerline-fonts
+    font-awesome
+    source-code-pro
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    emojione
+    kanji-stroke-order-font
+    ipafont
+    liberation_ttf
+    mplus-outline-fonts.githubRelease
+    dina-font
+    proggyfonts
+    jetbrains-mono
+  ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "22.11";
